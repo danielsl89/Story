@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class StoryDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "story";
-    private static final int DB_VERSION = 7;
+    private static final int DB_VERSION = 10;
 
     public static final String ENTRY_TABLE_NAME =   "ENTRY";
     public static final String ENTRY_COL_ID =       "_id";
@@ -69,15 +69,18 @@ public class StoryDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + CHOICE_TABLE_NAME);
         //if(oldVersion < 1){
             db.execSQL("CREATE TABLE " + ENTRY_TABLE_NAME + " ( " + ENTRY_TABLE_DESC + ");");
-            insertEntry(db, 1, "..................", R.drawable.question);
-            insertEntry(db, 2, "Apaga la alarma fastidiosamente y sigue durmiendo", R.drawable.background);
-            insertEntry(db, 3, "Se levanta y va al baño, hoy tiene que ser rápido!", R.drawable.background);
+            insertEntry(db, 1, "Esta es una historia random", R.drawable.question);
+            insertEntry(db, 2, "Paso 2 de historia random", R.drawable.background);
+            insertEntry(db, 3, "Paso 2 alternativo de historia random", R.drawable.background);
+            insertEntry(db, 4, "Fin de la historia!", R.drawable.background);
 
             db.execSQL("CREATE TABLE " + CHOICE_TABLE_NAME + " ( " + CHOICE_TABLE_DESC + ");");
-            insertChoice(db, 1, 1, "Seguir durmiendo", 2);
-            insertChoice(db, 2, 1, "Desactivarla y seguir durmiendo", 2);
-            insertChoice(db, 3, 1, "Desactivarla y levantarse", 3);
-            insertChoice(db, 4, 2, "Tomar una ducha", 4);
+            insertChoice(db, 1, 1, "Opción 1", 2);
+            insertChoice(db, 2, 1, "Opción 2", 2);
+            insertChoice(db, 3, 1, "Opción 3", 3);
+            insertChoice(db, 4, 2, "Terminar historia", 4);
+            insertChoice(db, 5, 3, "Terminar historia alternativa por las buenas", 4);
+            insertChoice(db, 6, 3, "Terminar historia alternativa por las malas", 4);
         //}
     }
 }
