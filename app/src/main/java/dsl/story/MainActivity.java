@@ -9,9 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements StoryFragment.OnChoiceSelectedListener{
+public class MainActivity extends Activity implements StoryFragment.OnChoiceSelectedListener {
 
     private static final int INITIAL_STORY_ID = 1;
 
@@ -35,34 +36,34 @@ public class MainActivity extends Activity implements StoryFragment.OnChoiceSele
         addStoryFragment(INITIAL_STORY_ID, true);
     }
 
-    public void onChoiceSelected(Choice choice){
+    public void onChoiceSelected(Choice choice) {
         addStoryFragment(choice.getNextEntryId(), false);
     }
 
-    private Entry getStoryEntry(int id){
+    private Entry getStoryEntry(int id) {
         Entry entry;
         ArrayList<Choice> choices = new ArrayList<Choice>();
         Cursor choicesCursor = null;
 
         //Query entry and choice from the DB
-        try{
+        try {
             storyCursor = db.query(StoryDatabaseHelper.ENTRY_TABLE_NAME, new String[]
                             {StoryDatabaseHelper.ENTRY_COL_ID, StoryDatabaseHelper.ENTRY_COL_TEXT, StoryDatabaseHelper.ENTRY_COL_IMAGE},
                     StoryDatabaseHelper.ENTRY_COL_ID + " = ?",
-                    new String[] {"" + id}, null, null, null);
+                    new String[]{"" + id}, null, null, null);
             choicesCursor = db.query(StoryDatabaseHelper.CHOICE_TABLE_NAME, new String[]
                             {StoryDatabaseHelper.CHOICE_COL_ID, StoryDatabaseHelper.CHOICE_COL_TEXT, StoryDatabaseHelper.CHOICE_COL_NEXT_ENTRY_ID},
                     StoryDatabaseHelper.CHOICE_COL_ENTRY_ID + " = ?",
-                    new String[] {"" + id}, null, null, null);
-        } catch (SQLiteException e){
+                    new String[]{"" + id}, null, null, null);
+        } catch (SQLiteException e) {
             Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
             toast.show();
             Log.e("MainActivity", "Initial DB error");
         }
         //Create array of choices for the actual entry
-        if(choicesCursor != null) {
+        if (choicesCursor != null) {
             choicesCursor.moveToFirst();
-            while(choicesCursor.isAfterLast() == false) {
+            while (choicesCursor.isAfterLast() == false) {
                 choices.add(new Choice(choicesCursor.getString(1), choicesCursor.getInt(2)));
                 choicesCursor.moveToNext();
             }
@@ -74,7 +75,7 @@ public class MainActivity extends Activity implements StoryFragment.OnChoiceSele
         return entry;
     }
 
-    private void addStoryFragment(int entryId, boolean isInitial){
+    private void addStoryFragment(int entryId, boolean isInitial) {
         Entry initialEntry = getStoryEntry(entryId);
         StoryFragment storyFragment = new StoryFragment();
         Bundle args = new Bundle();
@@ -82,9 +83,9 @@ public class MainActivity extends Activity implements StoryFragment.OnChoiceSele
         storyFragment.setArguments(args);
         // Add the fragment to the 'fragment_container' FrameLayout
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        if(isInitial){
+        if (isInitial) {
             fragmentTransaction.add(R.id.fragment_container, storyFragment);
-        }else{
+        } else {
             fragmentTransaction.replace(R.id.fragment_container, storyFragment);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
