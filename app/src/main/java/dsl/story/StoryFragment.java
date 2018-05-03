@@ -9,14 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StoryFragment extends Fragment implements View.OnClickListener{
+public class StoryFragment extends Fragment implements View.OnClickListener {
 
-    public interface OnChoiceSelectedListener{
+    public interface OnChoiceSelectedListener {
         void onChoiceSelected(Choice choice);
     }
 
@@ -40,20 +41,20 @@ public class StoryFragment extends Fragment implements View.OnClickListener{
             entry = bundle.getParcelable(ARG_ENTRY);
 
             //Set entry text
-            TextView textView = (TextView)view.findViewById(R.id.text);
+            TextView textView = (TextView) view.findViewById(R.id.text);
             textView.setText(entry.getText());
             //Set entry image
-            ImageView imageView = (ImageView)view.findViewById(R.id.image);
+            ImageView imageView = (ImageView) view.findViewById(R.id.image);
             imageView.setImageResource(entry.getImage());
             //Set available choices, set choices text and click listeners
             Button button;
             ArrayList<Choice> choices = entry.getChoices();
             int choicesSize = choices.size();
             String packageName = getActivity().getApplicationContext().getPackageName();
-            for(int i = 0; i < MAX_CHOICES; i++) {
+            for (int i = 0; i < MAX_CHOICES; i++) {
                 int buttonId = getResources().getIdentifier("button_" + i, "id", packageName);
-                button = (Button)view.findViewById(buttonId);
-                if(i < choicesSize) {
+                button = (Button) view.findViewById(buttonId);
+                if (i < choicesSize) {
                     button.setText(choices.get(i).getText());
                     button.setOnClickListener(this);
                 } else {
@@ -69,10 +70,9 @@ public class StoryFragment extends Fragment implements View.OnClickListener{
         ArrayList<Choice> choices = entry.getChoices();
         int choicesSize = choices.size();
         String packageName = getActivity().getApplicationContext().getPackageName();
-        for(int i = 0; i < choicesSize; i++) {
+        for (int i = 0; i < choicesSize; i++) {
             int buttonId = getResources().getIdentifier("button_" + i, "id", packageName);
-            if(v.getId() == buttonId)
-            {
+            if (v.getId() == buttonId) {
                 ((OnChoiceSelectedListener) getActivity()).onChoiceSelected(choices.get(i));
                 break;
             }
