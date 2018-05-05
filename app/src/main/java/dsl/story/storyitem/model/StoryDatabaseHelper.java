@@ -1,13 +1,11 @@
-package dsl.story;
+package dsl.story.storyitem.model;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by danielsl89 on 12/10/2016.
- */
+import dsl.story.R;
 
 public class StoryDatabaseHelper extends SQLiteOpenHelper {
 

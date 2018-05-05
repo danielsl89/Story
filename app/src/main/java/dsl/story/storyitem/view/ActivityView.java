@@ -1,4 +1,4 @@
-package dsl.story.view;
+package dsl.story.storyitem.view;
 
 import android.app.Activity;
 import android.app.FragmentManager;
