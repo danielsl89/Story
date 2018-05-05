@@ -56,21 +56,23 @@ public class StoryView extends ActivityView {
     }
 
     public void setEntryContent(Entry entry) {
-        textView.setText(entry.getText());
-        imageView.setImageResource(entry.getImage());
+        if (entry != null) {
+            textView.setText(entry.getText());
+            imageView.setImageResource(entry.getImage());
 
 
-        //Set choices visibility and text
-        ArrayList<Choice> choices = entry.getChoices();
-        int choicesSize = choices.size();
-        for (int i = 0; i < MAX_CHOICES; i++) {
+            //Set choices visibility and text
+            ArrayList<Choice> choices = entry.getChoices();
+            int choicesSize = choices.size();
+            for (int i = 0; i < MAX_CHOICES; i++) {
 
-            if (i < choicesSize) {
-                buttons.get(i).setText(choices.get(i).getText());
-                buttons.get(i).setTag(choices.get(i));
-            } else {
-                buttons.get(i).setVisibility(View.GONE);
-                buttons.get(i).setTag(null);
+                if (i < choicesSize) {
+                    buttons.get(i).setText(choices.get(i).getText());
+                    buttons.get(i).setTag(choices.get(i));
+                } else {
+                    buttons.get(i).setVisibility(View.GONE);
+                    buttons.get(i).setTag(null);
+                }
             }
         }
     }

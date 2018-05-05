@@ -1,8 +1,5 @@
 package dsl.story.storyitem.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 public class Choice {
     private String text;
     private int nextEntryId;

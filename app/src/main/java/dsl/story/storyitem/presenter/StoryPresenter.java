@@ -17,7 +17,7 @@ public class StoryPresenter {
 
     @Produce
     public StoryModel.NewStoryEntryEvent onFirstProducedEvent() {
-        return model.getInitialEvent();
+        return model.getCurrentEntryEvent();
     }
 
     @Subscribe
