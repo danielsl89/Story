@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Story</string>
+    <string name="error_message">Couldn\'t load story: Database unavailable</string>
 </resources>

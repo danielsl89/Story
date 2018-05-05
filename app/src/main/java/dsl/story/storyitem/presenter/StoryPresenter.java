@@ -16,7 +16,7 @@ public class StoryPresenter {
     }
 
     @Produce
-    public StoryModel.NewStoryEntryAvailable onFirstProducedEvent() {
+    public StoryModel.NewStoryEntryEvent onFirstProducedEvent() {
         return model.getInitialEvent();
     }
 
@@ -26,7 +26,16 @@ public class StoryPresenter {
     }
 
     @Subscribe
-    public void onNewStoryEntryAvailable(StoryModel.NewStoryEntryAvailable event) {
+    public void onNewStoryEntryAvailable(StoryModel.NewStoryEntryEvent event) {
         view.setEntryContent(event.getEntry());
+    }
+
+    @Subscribe
+    public void onErrorEvent(StoryModel.ErrorEvent event) {
+        view.showError();
+    }
+
+    public void destroy() {
+        model.destroy();
     }
 }

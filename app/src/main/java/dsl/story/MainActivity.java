@@ -2,7 +2,9 @@ package dsl.story;
 
 import android.app.Activity;
 import android.os.Bundle;
+
 import com.squareup.otto.Bus;
+
 import dsl.story.storyitem.model.StoryModel;
 import dsl.story.storyitem.presenter.StoryPresenter;
 import dsl.story.storyitem.view.StoryView;
@@ -34,8 +36,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        //TODO: close DB
-        //db.close();
+        presenter.destroy();
         super.onDestroy();
     }
 }

@@ -6,19 +6,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
 import com.squareup.otto.Bus;
+
 import java.util.ArrayList;
 
 public class StoryModel {
 
-    public static class NewStoryEntryAvailable {
+    public static class NewStoryEntryEvent {
+        private Entry entry;
+
+        public NewStoryEntryEvent(Entry entry) {
+            this.entry = entry;
+        }
+
         public Entry getEntry() {
             return entry;
         }
-        private Entry entry;
-        public NewStoryEntryAvailable(Entry entry){
-            this.entry = entry;
-        }
+    }
+
+    public static class ErrorEvent {
     }
 
     private static final int INITIAL_STORY_ID = 1;
@@ -34,9 +41,9 @@ public class StoryModel {
         db = storyDataBaseHelper.getReadableDatabase();
     }
 
-    public NewStoryEntryAvailable getInitialEvent() {
+    public NewStoryEntryEvent getInitialEvent() {
         Entry entry = getStoryEntry(INITIAL_STORY_ID);
-        return new NewStoryEntryAvailable(entry);
+        return new NewStoryEntryEvent(entry);
     }
 
     private Entry getStoryEntry(int id) {
@@ -44,6 +51,7 @@ public class StoryModel {
         ArrayList<Choice> choices = new ArrayList<Choice>();
         Cursor choicesCursor = null;
 
+        //TODO: This should be done in a loader (separate thread)
         //Query entry and choice from the DB
         try {
             storyCursor = db.query(StoryDatabaseHelper.ENTRY_TABLE_NAME, new String[]
@@ -56,10 +64,8 @@ public class StoryModel {
                     new String[]{"" + id}, null, null, null);
         } catch (SQLiteException e) {
             Log.e("MainActivity", "Initial DB error");
-            /*TODO: Send a message to the view for when data is unavailable
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
-            */
+            bus.post(new ErrorEvent());
+
         }
         //Create array of choices for the actual entry
         if (choicesCursor != null) {
@@ -79,7 +85,10 @@ public class StoryModel {
     public void getNextEntry(Choice choice) {
         int entryId = choice.getNextEntryId();
         Entry nextEntry = getStoryEntry(entryId);
-        bus.post(new NewStoryEntryAvailable(nextEntry));
+        bus.post(new NewStoryEntryEvent(nextEntry));
     }
 
+    public void destroy() {
+        db.close();
+    }
 }

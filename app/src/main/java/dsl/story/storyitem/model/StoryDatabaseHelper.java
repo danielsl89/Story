@@ -10,7 +10,7 @@ import dsl.story.R;
 public class StoryDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "story";
-    private static final int DB_VERSION = 10;
+    private static final int DB_VERSION = 11;
 
     public static final String ENTRY_TABLE_NAME = "ENTRY";
     public static final String ENTRY_COL_ID = "_id";
@@ -62,7 +62,7 @@ public class StoryDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //TODO: The following ln removes the entries table for debugging. Shouldn't be there
+        //TODO: The following ln removes the entries table for debugging. Remove when app is done
         db.execSQL("DROP TABLE IF EXISTS " + ENTRY_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + CHOICE_TABLE_NAME);
         //if(oldVersion < 1){
@@ -71,14 +71,16 @@ public class StoryDatabaseHelper extends SQLiteOpenHelper {
             insertEntry(db, 2, "Paso 2 de historia random", R.drawable.background);
             insertEntry(db, 3, "Paso 2 alternativo de historia random", R.drawable.background);
             insertEntry(db, 4, "Fin de la historia!", R.drawable.background);
+            insertEntry(db, 5, "Fin de la historia alternativa buena!", R.drawable.background);
+            insertEntry(db, 6, "Fin de la historia alternativa mala!", R.drawable.background);
 
             db.execSQL("CREATE TABLE " + CHOICE_TABLE_NAME + " ( " + CHOICE_TABLE_DESC + ");");
             insertChoice(db, 1, 1, "Opción 1", 2);
             insertChoice(db, 2, 1, "Opción 2", 2);
             insertChoice(db, 3, 1, "Opción 3", 3);
             insertChoice(db, 4, 2, "Terminar historia", 4);
-            insertChoice(db, 5, 3, "Terminar historia alternativa por las buenas", 4);
-            insertChoice(db, 6, 3, "Terminar historia alternativa por las malas", 4);
+            insertChoice(db, 5, 3, "Terminar historia alternativa por las buenas", 5);
+            insertChoice(db, 6, 3, "Terminar historia alternativa por las malas", 6);
         //}
     }
 }

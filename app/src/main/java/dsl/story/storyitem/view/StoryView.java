@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 
@@ -33,7 +34,6 @@ public class StoryView extends ActivityView {
 
     private static final int MAX_CHOICES = 4;
     private final Bus bus;
-    private Entry entry;
 
     @BindView(R.id.text)
     TextView textView;
@@ -50,8 +50,12 @@ public class StoryView extends ActivityView {
         ButterKnife.bind(this, activity);
     }
 
+    @OnClick({ R.id.button_0, R.id.button_1, R.id.button_2, R.id.button_3 })
+    public void onButtonClick(View v) {
+        bus.post(new ChoiceButtonPressedEvent((Choice) v.getTag()));
+    }
+
     public void setEntryContent(Entry entry) {
-        this.entry = entry;
         textView.setText(entry.getText());
         imageView.setImageResource(entry.getImage());
 
@@ -63,24 +67,16 @@ public class StoryView extends ActivityView {
 
             if (i < choicesSize) {
                 buttons.get(i).setText(choices.get(i).getText());
+                buttons.get(i).setTag(choices.get(i));
             } else {
                 buttons.get(i).setVisibility(View.GONE);
+                buttons.get(i).setTag(null);
             }
         }
     }
 
-    @OnClick({ R.id.button_0, R.id.button_1, R.id.button_2, R.id.button_3 })
-    public void onButtonClick(View v) {
-        ArrayList<Choice> choices = entry.getChoices();
-        int choicesSize = choices.size();
-
-        for (int i = 0; i < choicesSize; i++) {
-            //TODO: See if there is a better way to associate a choiceId to each of the button, so we don't have to save the entry data and iterate searching the id for each button onClick
-            int buttonId = buttons.get(i).getId();
-            if (v.getId() == buttonId) {
-                bus.post(new ChoiceButtonPressedEvent(choices.get(i)));
-                break;
-            }
-        }
+    public void showError() {
+        Toast toast = Toast.makeText(getContext(), R.string.error_message, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
