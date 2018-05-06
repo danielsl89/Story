@@ -55,13 +55,20 @@ public class GetEntryTask extends AsyncTask<Integer, Integer, Entry> {
         if (choicesCursor != null) {
             choicesCursor.moveToFirst();
             while (choicesCursor.isAfterLast() == false) {
-                choices.add(new Choice(choicesCursor.getString(1), choicesCursor.getInt(2)));
+                choices.add(new Choice(
+                        choicesCursor.getInt(0),
+                        entryId,
+                        choicesCursor.getString(1),
+                        choicesCursor.getInt(2)));
                 choicesCursor.moveToNext();
             }
         }
         //Create entry
         storyCursor.moveToFirst();
-        entry = new Entry(storyCursor.getString(1), storyCursor.getInt(2), choices);
+        entry = new Entry(
+                storyCursor.getInt(0),
+                storyCursor.getString(1),
+                storyCursor.getInt(2), choices);
 
         return entry;
     }

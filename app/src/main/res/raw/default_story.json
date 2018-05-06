@@ -1,0 +1,72 @@
+{
+  "entries": [
+    {
+      "id": 1,
+      "text": "Esta es una historia super random",
+      "image": 1
+    },
+    {
+      "id": 2,
+      "text": "Paso 2 de historia random",
+      "image": 1
+    },
+    {
+      "id": 3,
+      "text": "Paso 2 alternativo de historia random",
+      "image": 1
+    },
+    {
+      "id": 4,
+      "text": "Fin de la historia!",
+      "image": 1
+    },
+    {
+      "id": 5,
+      "text": "Fin de la historia alternativa buena!",
+      "image": 1
+    },
+    {
+      "id": 6,
+      "text": "Fin de la historia alternativa mala!",
+      "image": 1
+    }
+  ],
+  "choices": [
+    {
+      "id": 1,
+      "entryId": 1,
+      "text": "Opción 1",
+      "nextEntryId": 2
+    },
+    {
+      "id": 2,
+      "entryId": 1,
+      "text": "Opción 2",
+      "nextEntryId": 2
+    },
+    {
+      "id": 3,
+      "entryId": 1,
+      "text": "Opción 3",
+      "nextEntryId": 3
+    },
+    {
+      "id": 4,
+      "entryId": 2,
+      "text": "Terminar historia",
+      "nextEntryId": 4
+    },
+    {
+      "id": 5,
+      "entryId": 3,
+      "text": "Terminar historia alternativa por las buenas",
+      "nextEntryId": 5
+    },
+    {
+      "id": 6,
+      "entryId": 3,
+      "text": "Terminar historia alternativa por las malas",
+      "nextEntryId": 6
+    }
+  ]
+}
