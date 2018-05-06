@@ -1,8 +1,10 @@
 package dsl.story.storyitem.model;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,22 +12,26 @@ import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 
-public class GetEntryTask extends AsyncTask<Integer, Integer, Entry>{
-    private StoryModel entryTaskListener;
-    private SQLiteDatabase db;
+import dsl.story.storyitem.model.entity.Choice;
+import dsl.story.storyitem.model.entity.Entry;
+
+public class GetEntryTask extends AsyncTask<Integer, Integer, Entry> {
+    private Context context;
     private Bus bus;
 
-    public GetEntryTask(StoryModel entryTaskListener, Bus bus, SQLiteDatabase db) {
+    public GetEntryTask(Context context, Bus bus) {
         super();
-        this.entryTaskListener = entryTaskListener;
+        this.context = context;
         this.bus = bus;
-        this.db = db;
     }
 
     @Override
-    protected Entry doInBackground(Integer... entryId) {
+    protected Entry doInBackground(Integer... entryIds) {
+        int entryId = entryIds[0];
+        SQLiteOpenHelper storyDataBaseHelper = new StoryDatabaseHelper(context);
+        SQLiteDatabase db = storyDataBaseHelper.getReadableDatabase();
 
-        Entry entry;
+        Entry entry = null;
         ArrayList<Choice> choices = new ArrayList<Choice>();
         Cursor storyCursor = null;
         Cursor choicesCursor = null;
@@ -42,7 +48,7 @@ public class GetEntryTask extends AsyncTask<Integer, Integer, Entry>{
                     new String[]{"" + entryId}, null, null, null);
         } catch (SQLiteException e) {
             Log.e("MainActivity", "Initial DB error");
-            bus.post(new StoryModel.ErrorEvent());
+            return null;
 
         }
         //Create array of choices for the actual entry
@@ -63,10 +69,12 @@ public class GetEntryTask extends AsyncTask<Integer, Integer, Entry>{
 
     @Override
     protected void onPostExecute(Entry entry) {
-        super.onPostExecute(entry);
-        entryTaskListener.onGetEntryTaskComplete(entry);
-        entryTaskListener = null;
+        if (entry == null) {
+            bus.post(new StoryModel.ErrorEvent());
+        } else {
+            bus.post(new StoryModel.NewStoryEntryEvent(entry));
+        }
         bus = null;
-        db = null;
+        context = null;
     }
 }

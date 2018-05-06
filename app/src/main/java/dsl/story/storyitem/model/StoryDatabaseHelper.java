@@ -10,7 +10,7 @@ import dsl.story.R;
 public class StoryDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "story";
-    private static final int DB_VERSION = 11;
+    private static final int DB_VERSION = 17;
 
     public static final String ENTRY_TABLE_NAME = "ENTRY";
     public static final String ENTRY_COL_ID = "_id";

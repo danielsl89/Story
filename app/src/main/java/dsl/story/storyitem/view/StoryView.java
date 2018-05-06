@@ -16,8 +16,8 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dsl.story.storyitem.model.Choice;
-import dsl.story.storyitem.model.Entry;
+import dsl.story.storyitem.model.entity.Choice;
+import dsl.story.storyitem.model.entity.Entry;
 import dsl.story.R;
 
 public class StoryView extends ActivityView {

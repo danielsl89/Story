@@ -1,4 +1,4 @@
-package dsl.story.storyitem.model;
+package dsl.story.storyitem.model.entity;
 
 import java.util.ArrayList;
 

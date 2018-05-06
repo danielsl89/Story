@@ -1,64 +1,44 @@
 package dsl.story.storyitem.model;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.squareup.otto.Bus;
 
-import java.util.ArrayList;
-
+import dsl.story.storyitem.model.entity.Choice;
+import dsl.story.storyitem.model.entity.Entry;
 
 
 public class StoryModel {
 
     public static class NewStoryEntryEvent {
         private Entry entry;
-
         public NewStoryEntryEvent(Entry entry) {
             this.entry = entry;
         }
-
         public Entry getEntry() {
             return entry;
         }
     }
 
-    public static class ErrorEvent {
-    }
+    public static class ErrorEvent {}
 
-    private static final int INITIAL_STORY_ID = 3;
+    private static final int INITIAL_STORY_ID = 1;
+    private Context context;
     private final Bus bus;
 
-    private SQLiteDatabase db;
-    private Entry currentEntry;
-
     public StoryModel(Context context, Bus bus) {
+        this.context = context;
         this.bus = bus;
-
-        SQLiteOpenHelper storyDataBaseHelper = new StoryDatabaseHelper(context);
-        db = storyDataBaseHelper.getReadableDatabase();
     }
 
-    public NewStoryEntryEvent getCurrentEntryEvent() {
-        new GetEntryTask(this, this.bus, db).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, INITIAL_STORY_ID);
-        return new NewStoryEntryEvent(null);
-    }
-
-    public void onGetEntryTaskComplete(Entry entry) {
-        bus.post(new NewStoryEntryEvent(entry));
+    public NewStoryEntryEvent getInitialEntryEvent() {
+        //When the model gets notified that the event listener was added, it runs the async task
+        new GetEntryTask(context, this.bus).execute(INITIAL_STORY_ID);
+        return null;
     }
 
     public void getNextEntry(Choice choice) {
         int entryId = choice.getNextEntryId();
-        new GetEntryTask(this, bus, db).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, entryId);
-    }
-
-    public void destroy() {
-        db.close();
+        new GetEntryTask(context, bus).execute(entryId);
     }
 }

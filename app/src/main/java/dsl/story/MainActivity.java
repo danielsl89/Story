@@ -33,10 +33,4 @@ public class MainActivity extends Activity {
         super.onPause();
         BusProvider.unregister(presenter);
     }
-
-    @Override
-    protected void onDestroy() {
-        presenter.destroy();
-        super.onDestroy();
-    }
 }

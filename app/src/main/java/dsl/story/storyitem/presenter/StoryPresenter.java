@@ -17,7 +17,7 @@ public class StoryPresenter {
 
     @Produce
     public StoryModel.NewStoryEntryEvent onFirstProducedEvent() {
-        return model.getCurrentEntryEvent();
+        return model.getInitialEntryEvent();
     }
 
     @Subscribe
@@ -35,7 +35,4 @@ public class StoryPresenter {
         view.showError();
     }
 
-    public void destroy() {
-        model.destroy();
-    }
 }
