@@ -57,7 +57,6 @@ public class GetEntryTask extends AsyncTask<Integer, Integer, Entry> {
             while (choicesCursor.isAfterLast() == false) {
                 choices.add(new Choice(
                         choicesCursor.getInt(0),
-                        entryId,
                         choicesCursor.getString(1),
                         choicesCursor.getInt(2)));
                 choicesCursor.moveToNext();

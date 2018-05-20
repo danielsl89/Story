@@ -25,7 +25,7 @@ import dsl.story.storyitem.model.entity.Story;
 public class StoryDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "story";
-    private static final int DB_VERSION = 22;
+    private static final int DB_VERSION = 23;
 
     public static final String ENTRY_TABLE_NAME = "ENTRY";
     public static final String ENTRY_COL_ID = "_id";
@@ -74,26 +74,17 @@ public class StoryDatabaseHelper extends SQLiteOpenHelper {
         Story story = gson.fromJson(jsonString, Story.class);
 
         db.execSQL("CREATE TABLE " + ENTRY_TABLE_NAME + " ( " + ENTRY_TABLE_DESC + ");");
+        db.execSQL("CREATE TABLE " + CHOICE_TABLE_NAME + " ( " + CHOICE_TABLE_DESC + ");");
         ArrayList<Entry> entries = story.getEntries();
         for (Entry entry:entries) {
             insertEntry(db, entry.getId(), entry.getText(), entry.getImage());
+            ArrayList<Choice> choices = entry.getChoices();
+            if (choices != null) {
+                for (Choice choice:choices) {
+                    insertChoice(db, choice.getId(), entry.getId(), choice.getText(), choice.getNextEntryId());
+                }
+            }
         }
-
-        db.execSQL("CREATE TABLE " + CHOICE_TABLE_NAME + " ( " + CHOICE_TABLE_DESC + ");");
-        ArrayList<Choice> choices = story.getChoices();
-        for (Choice choice:choices) {
-            insertChoice(db, choice.getId(), choice.getEntryId(), choice.getText(), choice.getNextEntryId());
-        }
-        /*
-        TODO: See how can I point from a custom JSON file to a resource from drawable folder. Do I have the id, or should I save the name and use getResources().getIdentifier function
-        insertEntry(db, 1, "Esta es una historia random", R.drawable.question);
-        insertEntry(db, 2, "Paso 2 de historia random", R.drawable.background);
-        insertEntry(db, 3, "Paso 2 alternativo de historia random", R.drawable.background);
-        insertEntry(db, 4, "Fin de la historia!", R.drawable.background);
-        insertEntry(db, 5, "Fin de la historia alternativa buena!", R.drawable.background);
-        insertEntry(db, 6, "Fin de la historia alternativa mala!", R.drawable.background);
-        */
-        //}
     }
 
     private static void insertEntry(SQLiteDatabase db, int id, String text, String image) {
