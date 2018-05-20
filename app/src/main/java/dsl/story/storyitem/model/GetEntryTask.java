@@ -68,7 +68,7 @@ public class GetEntryTask extends AsyncTask<Integer, Integer, Entry> {
         entry = new Entry(
                 storyCursor.getInt(0),
                 storyCursor.getString(1),
-                storyCursor.getInt(2), choices);
+                storyCursor.getString(2), choices);
 
         return entry;
     }

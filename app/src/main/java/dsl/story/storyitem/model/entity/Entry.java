@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Entry {
     private int id;
     private String text;
-    private int image;
+    private String image;
     private ArrayList<Choice> choices;
 
-    public Entry(int id, String text, int image, ArrayList<Choice> choices){
+    public Entry(int id, String text, String image, ArrayList<Choice> choices){
         this.id = id;
         this.text = text;
         this.image = image;
@@ -18,7 +18,7 @@ public class Entry {
     public String getText() {
         return text;
     }
-    public int getImage() {
+    public String getImage() {
         return image;
     }
     public ArrayList<Choice> getChoices() {

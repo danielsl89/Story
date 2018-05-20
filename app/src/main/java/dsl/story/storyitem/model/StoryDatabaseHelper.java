@@ -25,7 +25,7 @@ import dsl.story.storyitem.model.entity.Story;
 public class StoryDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "story";
-    private static final int DB_VERSION = 20;
+    private static final int DB_VERSION = 22;
 
     public static final String ENTRY_TABLE_NAME = "ENTRY";
     public static final String ENTRY_COL_ID = "_id";
@@ -33,7 +33,7 @@ public class StoryDatabaseHelper extends SQLiteOpenHelper {
     public static final String ENTRY_COL_IMAGE = "image";
     private static final String ENTRY_TABLE_DESC = ENTRY_COL_ID + " INTEGER PRIMARY KEY, " +
             ENTRY_COL_TEXT + " TEXT, " +
-            ENTRY_COL_IMAGE + " INTEGER";
+            ENTRY_COL_IMAGE + " TEXT";
 
     public static final String CHOICE_TABLE_NAME = "CHOICE";
     public static final String CHOICE_COL_ID = "_id";
@@ -96,7 +96,7 @@ public class StoryDatabaseHelper extends SQLiteOpenHelper {
         //}
     }
 
-    private static void insertEntry(SQLiteDatabase db, int id, String text, int image) {
+    private static void insertEntry(SQLiteDatabase db, int id, String text, String image) {
         ContentValues values = new ContentValues();
         values.put(ENTRY_COL_ID, id);
         values.put(ENTRY_COL_TEXT, text);

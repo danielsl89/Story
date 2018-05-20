@@ -3,32 +3,32 @@
     {
       "id": 1,
       "text": "Esta es una historia super random",
-      "image": 1
+      "image": "background"
     },
     {
       "id": 2,
       "text": "Paso 2 de historia random",
-      "image": 1
+      "image": "background"
     },
     {
       "id": 3,
       "text": "Paso 2 alternativo de historia random",
-      "image": 1
+      "image": "background"
     },
     {
       "id": 4,
       "text": "Fin de la historia!",
-      "image": 1
+      "image": "question"
     },
     {
       "id": 5,
       "text": "Fin de la historia alternativa buena!",
-      "image": 1
+      "image": "question"
     },
     {
       "id": 6,
       "text": "Fin de la historia alternativa mala!",
-      "image": 1
+      "image": "question"
     }
   ],
   "choices": [

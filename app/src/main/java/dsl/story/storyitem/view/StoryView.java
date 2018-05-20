@@ -1,6 +1,7 @@
 package dsl.story.storyitem.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,8 +59,9 @@ public class StoryView extends ActivityView {
     public void setEntryContent(Entry entry) {
         if (entry != null) {
             textView.setText(entry.getText());
-            imageView.setImageResource(entry.getImage());
-
+            Context context = imageView.getContext();
+            int id = context.getResources().getIdentifier(entry.getImage(), "drawable", context.getPackageName());
+            imageView.setImageResource(id);
 
             //Set choices visibility and text
             ArrayList<Choice> choices = entry.getChoices();
