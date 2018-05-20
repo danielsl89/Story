@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "63406912966",
+    "firebase_url": "https://story-ef516.firebaseio.com",
+    "project_id": "story-ef516",
+    "storage_bucket": "story-ef516.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63406912966:android:bed545b170ad334d",
+        "android_client_info": {
+          "package_name": "dsl.story"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63406912966-3gsb3j1glrb851294i738vn6gsh4ijed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANArXsaCDpekx9PHEtX6g22P_b2lnCR8g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
