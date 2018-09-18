@@ -12,4 +12,7 @@ public class Story {
     public ArrayList<Entry> getEntries() {
         return entries;
     }
+    public void setEntries(ArrayList<Entry> entries) {
+        this.entries = entries;
+    }
 }

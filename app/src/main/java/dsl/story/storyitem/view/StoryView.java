@@ -64,7 +64,7 @@ public class StoryView extends ActivityView {
             imageView.setImageResource(id);
 
             //Set choices visibility and text
-            ArrayList<Choice> choices = entry.getChoices();
+            List<Choice> choices = entry.getChoices();
             int choicesSize = choices.size();
             for (int i = 0; i < MAX_CHOICES; i++) {
 

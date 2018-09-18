@@ -11,6 +11,7 @@ import android.util.Log;
 import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dsl.story.storyitem.model.entity.Choice;
 import dsl.story.storyitem.model.entity.Entry;
@@ -32,7 +33,7 @@ public class GetEntryTask extends AsyncTask<Integer, Integer, Entry> {
         SQLiteDatabase db = storyDataBaseHelper.getReadableDatabase();
 
         Entry entry = null;
-        ArrayList<Choice> choices = new ArrayList<Choice>();
+        List<Choice> choices = new ArrayList<Choice>();
         Cursor storyCursor = null;
         Cursor choicesCursor = null;
 
@@ -57,6 +58,7 @@ public class GetEntryTask extends AsyncTask<Integer, Integer, Entry> {
             while (choicesCursor.isAfterLast() == false) {
                 choices.add(new Choice(
                         choicesCursor.getInt(0),
+                        entryId,
                         choicesCursor.getString(1),
                         choicesCursor.getInt(2)));
                 choicesCursor.moveToNext();
@@ -64,10 +66,11 @@ public class GetEntryTask extends AsyncTask<Integer, Integer, Entry> {
         }
         //Create entry
         storyCursor.moveToFirst();
-        entry = new Entry(
-                storyCursor.getInt(0),
-                storyCursor.getString(1),
-                storyCursor.getString(2), choices);
+        entry = new Entry();
+        entry.setId(storyCursor.getInt(0));
+        entry.setText(storyCursor.getString(1));
+        entry.setImage(storyCursor.getString(2));
+        entry.setChoices(choices);
 
         return entry;
     }

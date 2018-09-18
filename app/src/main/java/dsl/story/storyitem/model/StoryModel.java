@@ -2,10 +2,17 @@ package dsl.story.storyitem.model;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.squareup.otto.Bus;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import dsl.story.R;
 import dsl.story.storyitem.model.entity.Choice;
 import dsl.story.storyitem.model.entity.Entry;
+import dsl.story.storyitem.model.entity.Story;
 
 
 public class StoryModel {

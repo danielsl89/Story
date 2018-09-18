@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import dsl.story.R;
@@ -62,6 +63,7 @@ public class StoryDatabaseHelper extends SQLiteOpenHelper {
         updateMyDatabase(db, oldVersion, newVersion);
     }
 
+    //TODO: This will actually get deleted when Room persistance library is fully integrated.
     //TODO: Update this stuff. It should be done in a Loader / Async task
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         //TODO: The following ln removes the entries table for debugging. Remove when app is done
@@ -78,7 +80,7 @@ public class StoryDatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Entry> entries = story.getEntries();
         for (Entry entry:entries) {
             insertEntry(db, entry.getId(), entry.getText(), entry.getImage());
-            ArrayList<Choice> choices = entry.getChoices();
+            List<Choice> choices = entry.getChoices();
             if (choices != null) {
                 for (Choice choice:choices) {
                     insertChoice(db, choice.getId(), entry.getId(), choice.getText(), choice.getNextEntryId());
